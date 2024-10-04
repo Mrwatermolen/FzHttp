@@ -1,0 +1,11 @@
+macro(FZ_HTTP_ADD_TEST_EXE_TARGET TARGET_NAME)
+    add_executable(${TARGET_NAME} ${ARGN})
+    target_link_libraries(${TARGET_NAME} PRIVATE fz_http)
+endmacro()
+
+file(GLOB_RECURSE FZ_HTTP_TESTS_SOURCES "*.cpp")
+foreach(FZ_HTTP_TESTS_SOURCE ${FZ_HTTP_TESTS_SOURCES})
+    get_filename_component(FZ_HTTP_TESTS_TARGET ${FZ_HTTP_TESTS_SOURCE} NAME_WE)
+    string(REPLACE ".cpp" "" FZ_HTTP_TESTS_TARGET ${FZ_HTTP_TESTS_TARGET})
+    FZ_HTTP_ADD_TEST_EXE_TARGET("fz_http_${FZ_HTTP_TESTS_TARGET}" ${FZ_HTTP_TESTS_SOURCE})
+endforeach()
